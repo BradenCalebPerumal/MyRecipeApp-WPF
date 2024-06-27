@@ -1,0 +1,33 @@
+﻿<Window x:Class="ST10287165_POE_P3.Exit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gif="clr-namespace:XamlAnimatedGif;assembly=XamlAnimatedGif"
+        xmlns:local="clr-namespace:ST10287165_POE_P3"
+        mc:Ignorable="d"
+        Title="Exit" Height="550" Width="950"
+        ResizeMode="CanMinimize"
+        Loaded="Window_Loaded">
+
+    <Grid>
+        <Image Source="/Icons/backexit1.png" Stretch="UniformToFill" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+
+        <Image gif:AnimationBehavior.SourceUri="pack://application:,,,/ST10287165_POE_P3;component/Icons/L6vz.gif" Margin="481,147,174,2">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="-1.005"/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <!-- Goodbye Message -->
+        <TextBlock  Text="Thank you for cooking with us! We hope your dishes turn out great!" 
+                 FontFamily="Papyrus" FontStyle="Italic" FontSize="24" FontWeight="Bold" Foreground="Black" Padding="10"
+                  HorizontalAlignment="Left" Margin="65,109,0,355" Width="750">
+            <TextBlock.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="8" Color="Yellow"/>
+            </TextBlock.Effect>
+        </TextBlock>
+    </Grid>
+</Window>

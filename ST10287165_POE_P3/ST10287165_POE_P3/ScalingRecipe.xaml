@@ -1,0 +1,141 @@
+﻿<Window x:Class="ST10287165_POE_P3.ScalingRecipe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Scaling Recipe" Height="600" Width="950"
+        ResizeMode="CanMinimize"
+        WindowStyle="SingleBorderWindow">
+    <Window.Resources>
+        <!-- Fancy Button Style -->
+        <Style x:Key="FancyButton" TargetType="Button">
+            <Setter Property="Background" Value="Gold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderBrush" Value="DarkGoldenrod"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFFFD700"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FFDAA520"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Main Background Image and Overlay -->
+    <Grid>
+        <Image Source="/Icons/finalbackg.png" Stretch="UniformToFill"/>
+        <Rectangle Fill="#22FFA500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        <!-- This Canvas allows positioning elements absolutely -->
+        <Canvas>
+            <!-- Floating StackPanel for Search Filters and Recipe List -->
+            <StackPanel x:Name="SearchAndFilterPanel" Canvas.Left="10" Canvas.Top="40" Width="200" Background="#FFFFFFCC" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock Text="Search Recipe" 
+                           FontFamily="Papyrus" FontStyle="Italic" FontSize="26" FontWeight="Bold" Foreground="Black" Padding="10"
+                           HorizontalAlignment="Center" Margin="0,20,0,20" Height="54">
+                    <TextBlock.Effect>
+                        <DropShadowEffect ShadowDepth="1" BlurRadius="8" Color="Gold"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+
+                <RadioButton x:Name="IngredientRadioButton" FontFamily="Comic Sans MS" FontWeight="Bold" Content="Filter by Ingredient" Margin="10" Checked="RadioButton_Checked"/>
+                <RadioButton x:Name="FoodGroupRadioButton" FontFamily="Comic Sans MS" FontWeight="Bold" Content="Filter by Food Group" Margin="10" Checked="RadioButton_Checked"/>
+                <RadioButton x:Name="CaloriesRadioButton" FontFamily="Comic Sans MS" FontWeight="Bold" Content="Filter by Max Calories" Margin="10" Checked="RadioButton_Checked"/>
+
+                <TextBox x:Name="IngredientFilter" Text="Filter by Ingredient" Margin="10" Visibility="Collapsed" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                <ComboBox x:Name="FoodGroupFilter" Margin="10">
+                    <ComboBoxItem Content="Starchy foods 🍞"/>
+                    <ComboBoxItem Content="Vegetables and fruits 🥕🍎"/>
+                    <ComboBoxItem Content="Dry beans, peas, lentils, soya 🌾"/>
+                    <ComboBoxItem Content="Chicken, fish, meat, and eggs 🍗🐟🥩🥚"/>
+                    <ComboBoxItem Content="Milk and dairy products 🥛🧀"/>
+                    <ComboBoxItem Content="Fats and oil 🧈🍯"/>
+                    <ComboBoxItem Content="Water 💧"/>
+                    <ComboBoxItem Content="Other"/>
+                </ComboBox>
+                <TextBox x:Name="MaxCaloriesFilter" Text="Filter by Max Calories" Margin="10" Visibility="Collapsed" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Button x:Name="SearchButton" Content="Search" Style="{StaticResource FancyButton}" Click="Search_Click" Width="75" Height="38"/>
+                    <Button x:Name="ResetButton" Content="Reset" Style="{StaticResource FancyButton}" Click="Reset_Click" Width="80" Height="38"/>
+                </StackPanel>
+                <ListBox x:Name="RecipeList" Margin="10" SelectionChanged="RecipeList_SelectionChanged"/>
+            </StackPanel>
+
+            <!-- Recipe Details Panel -->
+            <Border x:Name="RecipeDetailsPanel" Canvas.Left="220" Canvas.Top="10" Width="545" Height="250" Background="AntiqueWhite" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <RichTextBox x:Name="RecipeDetails" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Margin="10" FontSize="16" Background="Wheat" Foreground="Sienna" FontWeight="SemiBold">
+                    <FlowDocument />
+                </RichTextBox>
+            </Border>
+
+            <ListView x:Name="StepsListView" Canvas.Left="220" Canvas.Top="270" Width="545" Height="229" Background="Wheat" Foreground="Sienna" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Description}" IsChecked="{Binding IsChecked}" Foreground="Sienna" FontSize="16" FontWeight="SemiBold" Margin="10"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Scaling and Refresh Buttons -->
+            <StackPanel Canvas.Left="770" Canvas.Top="10" Orientation="Vertical" Background="#FFFFFFCC" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <TextBlock Text="Scale Recipe" FontSize="20" FontWeight="Bold" Margin="10"/>
+                <ComboBox x:Name="ScalingComboBox" Margin="10">
+                    <ComboBoxItem Content="0,5"/>
+                    <ComboBoxItem Content="1" IsSelected="True"/>
+                    <ComboBoxItem Content="1,5"/>
+                    <ComboBoxItem Content="2"/>
+                </ComboBox>
+                <Button x:Name="ScaleButton" Content="Scale Recipe" Style="{StaticResource FancyButton}" Click="ScaleButton_Click"/>
+                <Button x:Name="ResetScaleButton" Content="Reset" Style="{StaticResource FancyButton}" Click="ResetScaleButton_Click"/>
+                <Button x:Name="RefreshButton" Content="Refresh" Style="{StaticResource FancyButton}" Click="RefreshButton_Click"/>
+            </StackPanel>
+        </Canvas>
+
+        <!-- Back Button -->
+        <Button Content="Back" ToolTip="Go back" HorizontalAlignment="Left" Margin="12,6,0,0" VerticalAlignment="Top" Height="30" Width="95"
+                Background="LightGray" BorderBrush="Gray" Click="back_Click">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/back_icon-icons.com_65134.png" Height="20"/>
+                        <TextBlock Text=" Back" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
+
+        <!-- Exit Button -->
+        <Button Content="Exit" ToolTip="Exit application" HorizontalAlignment="Right" Margin="0,519,10,0" VerticalAlignment="Top" Height="40" Width="100"
+                Background="Red" Foreground="White" BorderBrush="DarkRed" Click="exit_Click">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/exit_icon_143788.png" Height="20"/>
+                        <TextBlock Text=" Exit" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
+
+    </Grid>
+</Window>
+

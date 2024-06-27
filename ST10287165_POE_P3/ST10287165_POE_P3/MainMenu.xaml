@@ -1,0 +1,104 @@
+﻿<Window x:Class="ST10287165_POE_P3.MainMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression.blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gif="clr-namespace:XamlAnimatedGif;assembly=XamlAnimatedGif"
+        xmlns:local="clr-namespace:ST10287165_POE_P3"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="MainMenu" Height="550" Width="950">
+    <Window.Resources>
+        <!-- Button Hover Animation -->
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter Property="Background" Value="#FFD70033"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- StackPanel Entry Animation -->
+        <Storyboard x:Key="StackPanelLoadAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:2"/>
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" From="300" To="0" Duration="0:0:2" />
+        </Storyboard>
+    </Window.Resources>
+
+    <Grid Background="Black">
+        <!-- Background Image -->
+        
+        <Grid x:Name="BG">
+            <Grid.Background>
+                <ImageBrush x:Name="img_bg"
+                            ImageSource="/Icons/banner-background-cuisine-white.png"
+                            Stretch="UniformToFill"/>
+            </Grid.Background>
+           
+        </Grid>
+
+
+        <!-- Transparent Orange Overlay with slightly more orange -->
+        <Rectangle Fill="#22FFA500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        <!-- Left-aligned StackPanel navigation menu -->
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Width="300" Background="#AA000000" Height="550" 
+                    RenderTransformOrigin="0.5,0.5" Opacity="0">
+            <StackPanel.RenderTransform>
+                <TranslateTransform/>
+            </StackPanel.RenderTransform>
+            <StackPanel.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard Storyboard="{StaticResource StackPanelLoadAnimation}"/>
+                </EventTrigger>
+            </StackPanel.Triggers>
+
+            <!-- Main Menu Heading -->
+            <TextBlock Text="Main Menu" 
+                      FontFamily="Papyrus" FontStyle="Italic" FontSize="33" FontWeight="Bold" Foreground="#FFFFFF" Padding="10"
+                       HorizontalAlignment="Center" Margin="0,20,0,20">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="1" BlurRadius="8" Color="Yellow"/>
+                </TextBlock.Effect>
+            </TextBlock>
+
+            <!-- Menu Buttons with Animation and Icons -->
+            <Button x:Name="AddRecipe" Content="➕ Add Recipe" Style="{StaticResource ButtonStyle}" FontFamily="Comic Sans MS" FontWeight="Bold" ToolTip="Add a new recipe to your collection" Click="AddRecipe_Click"/>
+            <Button x:Name="SearchRecipe" Content="🔍 Search Recipe" Style="{StaticResource ButtonStyle}" FontFamily="Comic Sans MS" FontWeight="Bold" ToolTip="Search through your recipe collection" Click="SearchRecipe_Click"/>
+            <Button x:Name="ScaleRecipe" Content="⚖️ Scale Recipe" Style="{StaticResource ButtonStyle}"  FontFamily="Comic Sans MS" FontWeight="Bold" ToolTip="Adjust ingredient quantities for different serving sizes" Click="ScaleRecipe_Click"/>
+            <Button x:Name="DeleteRecipe" Content="🗑 Remove Recipe" Style="{StaticResource ButtonStyle}"  FontFamily="Comic Sans MS" FontWeight="Bold" ToolTip="Remove an existing recipe from your collection" Click="DeleteRecipe_Click"/>
+            
+            <Button x:Name="Exit" Content="🛑 Exit" Style="{StaticResource ButtonStyle}"  FontFamily="Comic Sans MS" FontWeight="Bold" ToolTip="Exit the application" Click="Exit_Click"/>
+            
+        </StackPanel>
+       
+            <Image gif:AnimationBehavior.SourceUri="pack://application:,,,/ST10287165_POE_P3;component/Icons/kcMn5naAi.gif" Margin="-18,-4,745,401" RenderTransformOrigin="0.5,0.5" >
+           
+                <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-12.062"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+    </Grid>
+</Window>
