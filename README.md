@@ -240,12 +240,13 @@ No external plugins; fully integrated codebase.
 ---
 
 ##  Credits
-Developed and tested by **Braden Caleb Perumal (ST10287165)**.
+ 👨‍💻 Braden Caleb Perumal (ST10287165)  
+📧 **Email:** [calebperumal28@gmail.com](mailto:calebperumal28@gmail.com)
 
 ---
 
 ## GitHub Link
-🔗 https://github.com/VCWVL/prog6221---programming-2a---poe-CalebPerumal28.git
+- 📂 [GitHub Repository](https://github.com/BradenCalebPerumal/MyRecipeApp-WPF.git)  
 
 ---
 
